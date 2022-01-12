@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>U51_HTML 表單元素與實作技巧</title>
+  <link rel="stylesheet" href="/restaurant_list/public/stylesheets/bootstrap.css">
+  <style>
+    h1 {
+      font-size: 24px;
+      margin-top: 0;
+    }
+
+    body {
+      background: #757575;
+    }
+
+    div.container {
+      width: 40%;
+      margin: 2em auto;
+      background: #f5f5f5;
+      padding: 36px;
+      border-radius: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group>input,
+    .form-group>select {
+      margin-top: 4px;
+    }
+
+    .form-group .form-row {
+      display: flex;
+    }
+
+    .form-group .form-row * {
+      margin-right: 2px;
+      margin-bottom: 0;
+    }
+
+    .form-group .form-row p {
+      margin-top: 0;
+    }
+
+    .form-group .form-row input {
+      flex-grow: 1;
+      width: 100%;
+    }
+
+    fieldset {
+      border: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    fieldset legend {
+      padding: 0;
+      margin-bottom: 4px;
+      font-size: 1em;
+    }
+
+    input.form-control {
+      border: none;
+      border-bottom: 1px solid #757575;
+      background-color: #f5f5f5;
+      border-radius: 0;
+    }
+
+    #submit-btn {
+      width: 100%;
+      background-color: #757575;
+      border: none;
+      color: #f5f5f5;
+      font-weight: 600;
+      padding: 4px;
+      border-radius: 8px;
+    }
+
+    .valid-feedback {
+      display: none;
+      font-size: 0.8em;
+    }
+
+    .invalid-feedback {
+      color: red;
+    }
+
+    .valid-feedback {
+      color: green;
+    }
+
+    form.was-validated .form-control:invalid~.invalid-feedback,
+    form.was-validated .form-control:valid~.valid-feedback {
+      display: initial;
+    }
+
+    form.was-validated .form-control:invalid {
+      border-color: red;
+    }
+
+    form.was-validated .form-control:valid {
+      border-color: green;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <form novalidate>
+      <div class="form-group">
+        <label for="name">姓名</label>
+        <input type="text" name="name" id="name" class="form-control" placeholder="請輸入姓名...." required>
+        <div class="invalid-feedback">
+          This field is required.
+        </div>
+        <div class="valid-feedback">
+          Good.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">電子郵件地址</label>
+        <input type="text" name="email" id="email" class="form-control" placeholder="請輸入電子郵件地址...." required>
+      </div>
+
+      <fieldset class="form-group" id="job-hunting-status" name="job-hunting-status">
+        <legend class="col-form-lable" for="job-hunting-status">求職狀態</legend>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" name="job-hunting" id="active" value="active">
+          <label for="active" class="form-check-label">積極求職</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" name="job-hunting" id="intermediate" value="intermediate">
+          <label for="intermediate" class="form-check-label">了解新的機會</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" name="job-hunting" id="inactive" value="inactive">
+          <label for="inactive" class="form-check-label">沒有求職計畫</label>
+        </div>
+      </fieldset>
+
+      <div class="form-group">
+        <label for="experience">工作年資</label>
+        <select name="experience" id="experience">
+          <option>新鮮的肝</option>
+          <option value="1">1~3年</option>
+          <option value="3">3~5年</option>
+          <option value="5">5~7年</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>期望年資(萬元)</label>
+        <div class="form-row">
+          <div class="col">
+            <input type="number" name="expected-salary-min" class="form-control" min="0" max="1000">
+          </div>
+          <p> ~ </p>
+          <div class="col">
+            <input type="number" name="expected-salary-max" class="form-control" min="0" max="1000">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="title">目前職稱</label>
+        <input list="titles" id="title" class="form-control" name="current-title" id="title">
+        <datalist id="titles">
+          <option>前端工程師</option>
+          <option>後端工程師</option>
+          <option>全端工程師</option>
+          <option>資料庫管理師</option>
+          <option>維運技術人員</option>
+          <option>專案經理</option>
+        </datalist>
+
+        <fieldset class="form-group" id="expeted-job-type" name="expeted-job-type">
+          <legend class="col-form-lable" for="expeted-job-type">期望工作型態</legend>
+
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" name="job-type" id="remote" value="remote">
+            <label for="remote" class="form-check-label">遠端工作</label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" name="job-type" id="office" value="office">
+            <label for="office" class="form-check-label">公司上班</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" name="job-type" id="piecework" value="piecework">
+            <label for="piecework" class="form-check-label">接案工作</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" name="job-type" id="intern" value="intern">
+            <label for="intern" class="form-check-label">實習工作</label>
+          </div>
+        </fieldset>
+
+        <button type="submit" id="submit-btn" class="btn btn-primary">送出</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="/restaurant_list/public/javascripts/jquery.js"></script>
+  <script src="/restaurant_list/public/javascripts/popper.min.js"></script>
+  <script src="/restaurant_list/public/javascripts/bootstrap.js"></script>
+
+  <script>
+    const form = document.querySelector('form')
+    const submitButton = document.querySelector("#submit-btn");
+
+    submitButton.addEventListener("click", event => {
+      form.classList.add("was-validated");
+    });
+
+    form.addEventListener("submit", event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+    })
+  </script>
+</body>
+
+</html>
