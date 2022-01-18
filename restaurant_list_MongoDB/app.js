@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/search', (req, res) => {
-  var keyword = req.query.keyword.toLowerCase()
+  const keyword = req.query.keyword.toLowerCase()
   return Restaurant.find()
     .lean()
     .then(restaurants => res.render('index',{restaurants: restaurants.filter(restaurant => {return restaurant.name.toLowerCase().includes(keyword) || restaurant.category.toLowerCase().includes(keyword)})}))
@@ -39,7 +39,7 @@ app.get('/search', (req, res) => {
 })
 
 app.get('/edit/:id', (req, res) => {
-  var id = req.params.id
+  const id = req.params.id
   return Restaurant.findById(id)
     .lean()
     .then(restaurant => res.render('edit', {restaurant}))
@@ -47,10 +47,18 @@ app.get('/edit/:id', (req, res) => {
 })
 
 app.get('/detail/:id', (req, res) => {
-  var id = req.params.id
+  const id = req.params.id
   return Restaurant.findById(id)
-    .lean()
-    .then(restaurant => res.render('detail', {restaurant}))
+    .then(restaurant => restaurant.remove())
+    .then(() => res.render('index'))
+    .catch(error => console.error(error))
+})
+
+app.get('/delete/:id', (req, res) => {
+  const id = req.params.id
+  return Restaurant.findById(id)
+    .then(restaurant => restaurant.remove())
+    .then(() => res.redirect('/'))
     .catch(error => console.error(error))
 })
 

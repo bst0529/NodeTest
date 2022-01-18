@@ -79,9 +79,10 @@
           <div class="card-footer text-right">
             <a href="/edit/{{ this._id }}">Edit</a>
             <a href="/detail/{{ this._id }}">Detail</a>
-            <form action="/delete/{{ this._id }}" style="display: inline-block;">
-              <button type="submit" class="btn btn-secondary btn-sm">Delete</button>
-            </form>
+            {{!-- <form action="./delete/{{ this._id }}" style="display: inline-block;">
+              <button type="submit" class="btn btn-secondary btn-sm delete" data-_id="{{ this._id }}">Delete</button>
+            </form> --}}
+            <button type="submit" class="btn btn-secondary btn-sm delete" data-_id="{{ this._id }}">Delete</button>
           </div>
         </div>
         {{/each}}
@@ -89,3 +90,17 @@
     </div>
   </div>
 </div>
+<script>
+  document.querySelector('.card-columns').addEventListener('click', event => {
+    if (event.target.matches('.delete')) {
+      if (!confirm('確定刪除?')) return
+      var id = event.target.dataset._id
+      const form = document.createElement('form')
+      form.action = `/delete/${id}`
+      form.method = 'get'
+      document.body.appendChild(form)
+      form.submit()
+      form.remove();
+    }
+  })
+</script>
