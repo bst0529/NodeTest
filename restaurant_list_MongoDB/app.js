@@ -49,8 +49,8 @@ app.get('/edit/:id', (req, res) => {
 app.get('/detail/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
-    .then(restaurant => restaurant.remove())
-    .then(() => res.render('index'))
+    .lean()
+    .then(restaurant => res.render('detail',{restaurant}))
     .catch(error => console.error(error))
 })
 
