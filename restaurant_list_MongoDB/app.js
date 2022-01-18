@@ -3,6 +3,7 @@ const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const Restaurant = require('./models/restaurant')
+const restaurant = require('./models/restaurant')
 
 const app = express()
 const port = 3000
@@ -38,7 +39,19 @@ app.get('/search', (req, res) => {
 })
 
 app.get('/edit/:id', (req, res) => {
-  var id = req.body.id
+  var id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then(restaurant => res.render('edit', {restaurant}))
+    .catch(error => console.error(error))
+})
+
+app.get('/detail/:id', (req, res) => {
+  var id = req.params.id
+  return Restaurant.findById(id)
+    .lean()
+    .then(restaurant => res.render('detail', {restaurant}))
+    .catch(error => console.error(error))
 })
 
 app.listen(port, () => {
