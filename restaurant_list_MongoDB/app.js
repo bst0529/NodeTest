@@ -29,6 +29,18 @@ app.get('/', (req, res) => {
     .catch(error => console.error(error))
 })
 
+app.get('/search', (req, res) => {
+  var keyword = req.query.keyword.toLowerCase()
+  return Restaurant.find()
+    .lean()
+    .then(restaurants => res.render('index',{restaurants: restaurants.filter(restaurant => {return restaurant.name.toLowerCase().includes(keyword) || restaurant.category.toLowerCase().includes(keyword)})}))
+    .catch(error => console.error(error))
+})
+
+app.get('/edit/:id', (req, res) => {
+  var id = req.body.id
+})
+
 app.listen(port, () => {
   console.log(`This Express Server is running on http://localhost:${port}`)
 })
