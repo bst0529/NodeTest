@@ -34,7 +34,7 @@ app.get('/search', (req, res) => {
   const keyword = req.query.keyword.toLowerCase()
   return Restaurant.find()
     .lean()
-    .then(restaurants => res.render('index',{restaurants: restaurants.filter(restaurant => {return restaurant.name.toLowerCase().includes(keyword) || restaurant.category.toLowerCase().includes(keyword)})}))
+    .then(restaurants => res.render('index', { restaurants: restaurants.filter(restaurant => { return restaurant.name.toLowerCase().includes(keyword) || restaurant.category.toLowerCase().includes(keyword) }) }))
     .catch(error => console.error(error))
 })
 
@@ -42,7 +42,26 @@ app.get('/edit/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .lean()
-    .then(restaurant => res.render('edit', {restaurant}))
+    .then(restaurant => res.render('edit', { restaurant }))
+    .catch(error => console.error(error))
+})
+
+app.post('/edit', (req, res) => {
+  let params = req.body
+  return Restaurant.findById(params._id)
+    .then(restaurant => {
+      restaurant.name = params.name
+      restaurant.name_en = params.name_en
+      restaurant.category = params.category
+      restaurant.image = params.image
+      restaurant.location = params.location
+      restaurant.phone = params.phone
+      restaurant.google_map = params.google_map
+      restaurant.rating = params.rating
+      restaurant.description = params.description
+      return restaurant.save()
+    })
+    .then(() => res.redirect('/'))
     .catch(error => console.error(error))
 })
 
@@ -50,7 +69,7 @@ app.get('/detail/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .lean()
-    .then(restaurant => res.render('detail',{restaurant}))
+    .then(restaurant => res.render('detail', { restaurant }))
     .catch(error => console.error(error))
 })
 

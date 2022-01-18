@@ -45,12 +45,12 @@
 <div class="container search-bar">
   <div class="search-bar-outer">
     <div class="search-bar-inner">
-      <form action="/search">
+      <form action="/search" id="search-form">
         <h4>尋找餐廳</h4>
         <div class="input-group">
-          <input type="text" name="keyword" placeholder="餐廳名稱或分類" class="form-control">
+          <input type="text" id="keyword" name="keyword" placeholder="餐廳名稱或分類" class="form-control">
           <div class="input-group-append">
-            <button type="submit" class="btn btn-major"><i class="fab fa-searchengin"></i></button>
+            <button type="submit" class="btn btn-major" id="search-btn"><i class="fab fa-searchengin"></i></button>
           </div>
         </div>
       </form>
@@ -60,37 +60,42 @@
 
 <div class="container mt-3">
   <div class="row"></div>
-    <div class="col-md-10 col-12 mx-auto">
-      <div class="card-columns">
-        {{#each restaurants}}
-        <div class="card">
-          <img src="{{ this.image }}" alt="{{ this.name }}" class="card-img-top">
-          <div class="card-body p-3">
-            <h6 class="card-title mb-1">{{ this.name }}</h6>
-            <div class="restaurant-category mb-1">
-              <i class="fas fa-utensils pr-2"></i>
-              {{ this.category }}
-            </div>
-            <div class="badge badge-pill badge-danger font-weight-normal">
-              {{ this.rating }}
-              <i class="fas fa-star fa-xs"></i>
-            </div>
+  <div class="col-md-10 col-12 mx-auto">
+    <div class="card-columns">
+      {{#each restaurants}}
+      <div class="card">
+        <img src="{{ this.image }}" alt="{{ this.name }}" class="card-img-top">
+        <div class="card-body p-3">
+          <h6 class="card-title mb-1">{{ this.name }}</h6>
+          <div class="restaurant-category mb-1">
+            <i class="fas fa-utensils pr-2"></i>
+            {{ this.category }}
           </div>
-          <div class="card-footer text-right">
-            <a href="/edit/{{ this._id }}">Edit</a>
-            <a href="/detail/{{ this._id }}">Detail</a>
-            {{!-- <form action="./delete/{{ this._id }}" style="display: inline-block;">
-              <button type="submit" class="btn btn-secondary btn-sm delete" data-_id="{{ this._id }}">Delete</button>
-            </form> --}}
-            <button type="submit" class="btn btn-secondary btn-sm delete" data-_id="{{ this._id }}">Delete</button>
+          <div class="badge badge-pill badge-danger font-weight-normal">
+            {{ this.rating }}
+            <i class="fas fa-star fa-xs"></i>
           </div>
         </div>
-        {{/each}}
+        <div class="card-footer text-right">
+          <a href="/edit/{{ this._id }}">Edit</a>
+          <a href="/detail/{{ this._id }}">Detail</a>
+          <button type="submit" class="btn btn-secondary btn-sm delete" data-_id="{{ this._id }}">Delete</button>
+        </div>
       </div>
+      {{/each}}
     </div>
   </div>
 </div>
+</div>
 <script>
+  document.querySelector('#search-btn').addEventListener('click', event => {
+    let keyword = document.querySelector("#keyword").value.trim()
+    if (keyword.length === 0) {
+      alert('請填寫餐廳名稱或料理分類')
+      event.stopPropagation()
+      event.preventDefault()
+    }
+  })
   document.querySelector('.card-columns').addEventListener('click', event => {
     if (event.target.matches('.delete')) {
       if (!confirm('確定刪除?')) return
