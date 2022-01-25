@@ -45,13 +45,16 @@
 <div class="container search-bar">
   <div class="search-bar-outer">
     <div class="search-bar-inner">
-      <form action="/search" id="search-form">
+      <form action="/restaurants/search" id="search-form">
         <h4>尋找餐廳</h4>
         <div class="input-group">
           <input type="text" id="keyword" name="keyword" placeholder="餐廳名稱或分類" class="form-control">
           <div class="input-group-append">
             <button type="submit" class="btn btn-major" id="search-btn"><i class="fab fa-searchengin"></i></button>
           </div>
+        </div>
+        <div class="mt-2 text-right">
+          <a href="/restaurants/new" class="btn btn-primary mb-0">新增餐廳</a>
         </div>
       </form>
     </div>

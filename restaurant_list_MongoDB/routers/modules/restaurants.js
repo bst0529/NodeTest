@@ -17,6 +17,27 @@ router.get('/search', (req, res) => {
       .then(restaurant => res.render('edit', { restaurant }))
       .catch(error => console.error(error))
   })
+
+  router.get('/new', (req, res) => {
+    res.render('new')
+  })
+
+  router.post('/', (req, res) => {
+    const restaurant = req.body
+    return Restaurant.create({
+      name: restaurant.name,
+      name_en: restaurant.name_en,
+      category: restaurant.category,
+      image: restaurant.image,
+      location: restaurant.location,
+      phone: restaurant.phone,
+      google_map: restaurant.google_map,
+      rating: restaurant.rating,
+      description: restaurant.description,
+    })
+    .then(() => res.redirect('/'))
+    .catch(error => console.error(error))
+  })
   
   router.put('/', (req, res) => {
     let params = req.body

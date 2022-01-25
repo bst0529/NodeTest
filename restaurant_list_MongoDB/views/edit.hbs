@@ -63,9 +63,6 @@
                 </div>
                 <input type="text" class="form-control" placeholder="請填寫英文餐廳名稱" name="name_en"
                     value="{{ restaurant.name_en }}">
-                <div class="input-group-append">
-                    <button type="button" class="btn btn-secondary" id="name_en-apply">應用</button>
-                </div>
             </div>
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
@@ -132,12 +129,13 @@
                 </div>
                 <input type="text" class="form-control" placeholder="請填寫得分" name="rating"
                     value="{{ restaurant.rating }}">
-                <div class="input-group-append">
-                    <button type="button" class="btn btn-secondary" id="rating-apply">應用</button>
-                </div>
             </div>
             <input type="hidden" name="_id" value="{{ restaurant._id }}">
-            <button type="submit" class="btn btn-primary btn-block mb-5">儲存</button>
+            <div class="text-center mt-3 mb-5">
+                <button type="submit" class="btn btn-primary">儲存</button>
+                <a href="/" class="btn btn-info">回首頁</a>
+            </div>
+            
         </div>
     </form>
 </div>
