@@ -6,19 +6,10 @@ const Restaurant = require('./models/restaurant')
 const restaurant = require('./models/restaurant')
 const methodOverride = require('method-override')
 const router = require('./routers/index')
+require('./config/mongoose')
 
 const app = express()
 const port = 3000
-
-mongoose.connect('mongodb://localhost/restaurant-list')
-const db = mongoose.connection
-db.on('error', () => {
-  console.log('mongoDB error!!!')
-})
-
-db.once('open', () => {
-  console.log('mongoDB connected!!!');
-})
 
 app.use(express.static('public'))
 app.engine('hbs', exphbs.engine({ extname: '.hbs', defaultLayout: 'main' }))
