@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const Restaurant = require('./models/restaurant')
 const restaurant = require('./models/restaurant')
+const methodOverride = require('method-override')
 
 const app = express()
 const port = 3000
@@ -22,6 +23,7 @@ app.use(express.static('public'))
 app.engine('hbs', exphbs.engine({ extname: '.hbs', defaultLayout: 'main' }))
 app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
 
 app.get('/', (req, res) => {
   return Restaurant.find()
@@ -46,7 +48,7 @@ app.get('/edit/:id', (req, res) => {
     .catch(error => console.error(error))
 })
 
-app.post('/edit', (req, res) => {
+app.put('/', (req, res) => {
   let params = req.body
   return Restaurant.findById(params._id)
     .then(restaurant => {
@@ -73,7 +75,7 @@ app.get('/detail/:id', (req, res) => {
     .catch(error => console.error(error))
 })
 
-app.get('/delete/:id', (req, res) => {
+app.delete('/:id', (req, res) => {
   const id = req.params.id
   return Restaurant.findById(id)
     .then(restaurant => restaurant.remove())

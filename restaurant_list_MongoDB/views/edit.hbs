@@ -45,7 +45,7 @@
     </div>
 </div>
 <div class="container">
-    <form action="/edit" method="post">
+    <form action="/?_method=put" method="post">
         <div class="input-groups">
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
@@ -137,7 +137,7 @@
                 </div>
             </div>
             <input type="hidden" name="_id" value="{{ restaurant._id }}">
-            <button type="submit" class="btn btn-primary btn-block">儲存</button>
+            <button type="submit" class="btn btn-primary btn-block mb-5">儲存</button>
         </div>
     </form>
 </div>
@@ -174,8 +174,6 @@
                     break;
                 case 'description-apply':
                     inputTxt = document.querySelector('input[name="description"]').value
-                    alert(inputTxt)
-                    alert(document.querySelector('.restaurant-show-description').innerText)
                     document.querySelector('.restaurant-show-description').innerText = inputTxt
                     break;
             }

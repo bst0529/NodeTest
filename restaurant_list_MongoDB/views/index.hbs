@@ -101,8 +101,8 @@
       if (!confirm('確定刪除?')) return
       var id = event.target.dataset._id
       const form = document.createElement('form')
-      form.action = `/delete/${id}`
-      form.method = 'get'
+      form.action = `/${id}?_method=delete`
+      form.method = 'post'
       document.body.appendChild(form)
       form.submit()
       form.remove();
