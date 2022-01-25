@@ -77,8 +77,8 @@
           </div>
         </div>
         <div class="card-footer text-right">
-          <a href="/edit/{{ this._id }}">Edit</a>
-          <a href="/detail/{{ this._id }}">Detail</a>
+          <a href="/restaurants/edit/{{ this._id }}">Edit</a>
+          <a href="/restaurants/detail/{{ this._id }}">Detail</a>
           <button type="submit" class="btn btn-secondary btn-sm delete" data-_id="{{ this._id }}">Delete</button>
         </div>
       </div>
@@ -101,7 +101,7 @@
       if (!confirm('確定刪除?')) return
       var id = event.target.dataset._id
       const form = document.createElement('form')
-      form.action = `/${id}?_method=delete`
+      form.action = `/restaurants/${id}?_method=delete`
       form.method = 'post'
       document.body.appendChild(form)
       form.submit()

@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const Restaurant = require('./models/restaurant')
 const restaurant = require('./models/restaurant')
 const methodOverride = require('method-override')
+const router = require('./routers/index')
 
 const app = express()
 const port = 3000
@@ -24,64 +25,7 @@ app.engine('hbs', exphbs.engine({ extname: '.hbs', defaultLayout: 'main' }))
 app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
-
-app.get('/', (req, res) => {
-  return Restaurant.find()
-    .lean()
-    .then(restaurants => res.render('index', { restaurants }))
-    .catch(error => console.error(error))
-})
-
-app.get('/search', (req, res) => {
-  const keyword = req.query.keyword.toLowerCase()
-  return Restaurant.find()
-    .lean()
-    .then(restaurants => res.render('index', { restaurants: restaurants.filter(restaurant => { return restaurant.name.toLowerCase().includes(keyword) || restaurant.category.toLowerCase().includes(keyword) }) }))
-    .catch(error => console.error(error))
-})
-
-app.get('/edit/:id', (req, res) => {
-  const id = req.params.id
-  return Restaurant.findById(id)
-    .lean()
-    .then(restaurant => res.render('edit', { restaurant }))
-    .catch(error => console.error(error))
-})
-
-app.put('/', (req, res) => {
-  let params = req.body
-  return Restaurant.findById(params._id)
-    .then(restaurant => {
-      restaurant.name = params.name
-      restaurant.name_en = params.name_en
-      restaurant.category = params.category
-      restaurant.image = params.image
-      restaurant.location = params.location
-      restaurant.phone = params.phone
-      restaurant.google_map = params.google_map
-      restaurant.rating = params.rating
-      restaurant.description = params.description
-      return restaurant.save()
-    })
-    .then(() => res.redirect('/'))
-    .catch(error => console.error(error))
-})
-
-app.get('/detail/:id', (req, res) => {
-  const id = req.params.id
-  return Restaurant.findById(id)
-    .lean()
-    .then(restaurant => res.render('detail', { restaurant }))
-    .catch(error => console.error(error))
-})
-
-app.delete('/:id', (req, res) => {
-  const id = req.params.id
-  return Restaurant.findById(id)
-    .then(restaurant => restaurant.remove())
-    .then(() => res.redirect('/'))
-    .catch(error => console.error(error))
-})
+app.use(router)
 
 app.listen(port, () => {
   console.log(`This Express Server is running on http://localhost:${port}`)
